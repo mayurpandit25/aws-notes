@@ -1,0 +1,27 @@
+**Installing tomcat and run the student.war page in UBUNTU:-
+
+1.create a instance (ubuntu machine)
+2.access these instance (git/bash)
+3.sudo apt update && sudo apt upgrade -y
+4.sudo apt install default-jre
+5.sudo apt install default-jdk
+6.java --version
+7.wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.91/bin/apache-tomcat-8.5.91.tar.gz
+8.tar -xvf apache-tomcat-8.5.91.tar.gz
+9.mv apache-tomcat-8.5.91 tomcat
+10.cd tomcat
+11.cd /bin
+12.(./catalina.sh start)
+13.go to security and add the 8080 rule
+14.(public ip of instance):8080
+
+15.hosting the student.war page
+16.go to s3 bucket and upload a student.war file
+17.cd /tomcat
+18.cd /webapps
+19.wget 
+20.cd ..
+21.cd /tomcat
+22.cd /bin
+23.(./catalina.sh start)
+24.(public ip of instance):8080/student
