@@ -1,0 +1,30 @@
+**Mount s3 bucket on EC2:-
+
+  1.create a instance (centos 7)
+  2.access the instance
+       1.amazon-linux-extras install epel -y
+       2.yum install s3fs-fuse -y
+       3.echo (access key):(secret key) > ${HOME}/.mayurpasswd
+       4.ls -la /root/
+       5.chmod 600 /root/.mayurpasswd
+       6.mkdir /mountbucket
+       7.ls /
+       8.s3fs (bucket name) /mountbucket -o passwd_file=${home}/.mayurpasswd
+       9.mount | grep mountbucket
+      10.cd /mountbucket
+      11.ls
+      12.touch file{1..10}
+  3.go to console and refresh the s3 bucket
+  4.then upload a file on s3,you can access these file on EC2.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**if amazon-linux-extras install epel -y command not run / run these commands to download epel repo in centos:-
+
+$ yum search epel-release.
+$ yum info epel-release.
+$ sudo yum install epel-release.
+$ rpm -qa | grep epel.
+$ yum repolist.
+$ yum --disablerepo="*" --enablerepo="epel" list available.
+$ sudo yum --disablerepo="*" --enablerepo="epel" list available | wc -l.

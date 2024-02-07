@@ -1,0 +1,25 @@
+**Installing tomcat and run the student.war page:-
+
+  1.create a instance (amazon-linux)
+  2.access the instance in git/bash
+  3.yum update -y
+  4.yum install java -y
+  5.wget (https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.91/bin/apache-tomcat-8.5.91.tar.gz)
+  6.tar -xzvf apache-tomcat-8.5.91.tar.gz
+  7.mv apache-tomcat-8.5.91 tomcat
+  8.cp -R tomcat /usr/local/
+  9.cd /usr/local/
+ 10.cd tomcat/
+ 11.cd bin/
+ 12../catalina.sh start --------------to start tomcat
+ 13.(public ip of instance):8080 -----check on web
+
+14.hosting student.war
+15.cd /usr/local/
+16.cd tomcat/
+17.cd webapps/
+18.wget (link of student.war)
+19.cd ..
+20.cd bin/
+21../catalina.sh start --------------start
+22.(public ip of instance):8080/student

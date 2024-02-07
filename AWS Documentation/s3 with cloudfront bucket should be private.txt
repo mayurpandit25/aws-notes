@@ -1,0 +1,21 @@
+s3 with cloudfront bucket should be private
+
+========================================================================================================================================================================
+
+1.download a css template
+
+2.create a s3 bucket which is private
+     1.add these template in s3 bucket
+
+3.create a cloudfront
+     1.create a distribution
+     2.choose destination----s3 bucket
+     3.click on Origin access control settings------and create a control setting------create
+     4.create a distribution
+
+4.then you get a notification and copy these policy to s3 bucket
+
+4.copy the dns and hit on web 
+      { (dns)/index.html }
+
+========================================================================================================================================================================

@@ -1,0 +1,118 @@
+                                        **CLOUDWATCH-2 (ACCESS LOGS & ERROR LOGS)-------(singapore region)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1.create a instance 
+        1.name-------cloudwatch-agent
+        2.machine0---ubuntu
+        3.sg---------http,ssh,https
+        4.userdata-
+            #!/bin/bash
+            sudo apt update -y 
+            sudo apt install nginx -y 
+            sudo systemctl start nginx
+            sudo systemctl enable nginx
+            sudo rm -rf /var/www/html/
+            sudo echo "HELLO WOLRD" > /var/www/html/index.html
+            sudo systemctl restart nginx
+       
+2.create a role
+       1.for EC2
+       2.role---cloudwatchagentserverpolicy
+       3.name---role-for-cloudwatch
+       4.create a role
+
+3.go to instance
+       1.click on instance
+       2.click on action---security----modify role----attach role (roleforcloudwatch)
+
+FOR ACCESS LOGS:-
+
+4.accessing the server in CMD
+       1.curl https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py -O
+       2.apt install python2.7 -y
+       3.sudo python2.7 ./awslogs-agent-setup.py --region ap-southeast-1
+                 1.path of log file to upload--------------/var/log/nginx/access.log
+                 2.destination log group name--------------nginx-access-log
+                 3.choose log stream name------------------use hostname (2)
+                 4.choose log Event timestamp format-------1
+                 5.choose initial position of upload-------From end of file (2)
+                 6.More log files to configure ------------N
+       4.systemctl start awslogs
+       5.systemctl status awslogs
+     
+       6.(copy public IP) --------------------------------hit on web
+       7.systemctl restart awslogs
+   
+5.go to cloudwatch
+       1.click on log groups
+              1.nginx-access-logs
+              2.click on these
+              3.then click on id 
+              4.you get access logs
+
+
+--------------------------------------------------------------------------------------------
+
+FOR ERROR LOGS:-
+
+6.go to instance
+       1.rm -rf /var/www/html/index.html
+       2.systemctl restart nginx
+       
+
+7.on instance
+      1.vim /var/awslogs/etc/awslogs.conf
+            
+           [/var/log/nginx/access.log]
+           datetime_format = %b %d %H:%M:%S
+           file = /var/log/nginx/access.log        scroll these file and you get these 7 lines at end these 7 lines paste below these line and update the word error by
+           buffer_duration = 5000                  changing the word access
+           log_stream_name = {hostname}
+           initial_position = end of_file
+           log_group_name = nginx-access-log
+
+           
+           [/var/log/nginx/error.log]
+           datetime_format = %b %d %H:%M:%S
+           file = /var/log/nginx/error.log
+           buffer_duration = 5000
+           log_stream_name = {hostname}
+           initial_position = end of_file
+           log_group_name = nginx-error-log
+     
+      2.systemctl restart awslogs
+      
+      3.(public ip) ------------------------------hit on web (you get error)
+
+8.Then go to cloudwatch and refresh
+      1.click on log groups
+            1.nginx-access-logs
+            2.nginx-error-logs
+                      1.select nginx-error-logs
+                      2.select ID 
+                      3.you get error logs 
+
+9.Again you can access access-logs
+     1.go to instance
+             1.vim /var/www/html/index.html
+                   <h1> HELLO WORLD </h1>
+             2.systemctl restart nginx
+             3.systemctl status nginx
+      
+     2. (public iP) --------------------------hit on web (you can access)
+
+10.go to cloudwatch and check access logs
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+   
+
+
+
+                 
+ 
